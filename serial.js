@@ -23,7 +23,7 @@
 const thingsboardHost = "127.0.0.1";
 
 //Set Fahrenheit=0 display in centigrade
-const Fahrenheit=1;
+const Fahrenheit=0;
 
 var mqtt = require('mqtt');
 var accessToken = "myI0OZmaJDCalm1O5r8E";
@@ -92,13 +92,14 @@ port.on('readable', function () {
   var deviceID;
   var payload;
   var jsonData;
+  var llapMsg;
   
   inStr+=port.read().toString('utf8');
   n = inStr.search("a"); //start charachter for llap message
   if (n>0) inStr = inStr.substring(n, inStr.length); //chop off data preceding start charachter
   if (inStr.length>=12){ //we have an llap message!
     while (inStr!=""){
-		data.command=""
+		data.command="";
 		llapMsg=inStr.substring(1,12);
 		console.log(llapMsg);
 		data.deviceID=llapMsg.substring(0,2);
